@@ -85,40 +85,43 @@ h.set_title('Top 30 Frequently occured words')
 
 ---
 
-## Most frequently occured four-word sequences
+## Most frequently occured two-word sequences
 ```python
-text6 = []
-for i in range(len(text4)-3):
-    four = text4[i] + ' ' + text4[i+1]+' '+text4[i+2] + ' '+text4[i+3]
-    text6.append(four)
+text5 = []
+for i in range(len(text4)-1):
+    two = text4[i] + ' ' + text4[i+1]
+    text5.append(two)
 
 # ruling out sequences that contain a period
-text6_noperiod = []
-for i in text6:
-    if re.findall('[.]', i) == []:
-        text6_noperiod.append(i)
-
+text5_noperiod = []
+for i in text5:
+    if re.findall('[.]', i) == []: # if the sequence does not contain a period
+        text5_noperiod.append(i)
 ```
-![image](https://user-images.githubusercontent.com/43469728/161374103-803e7fd0-0e7b-47e6-ad60-0255260e5f93.png)
+![image](https://user-images.githubusercontent.com/43469728/161374611-0aa1121b-d5cc-4d6f-8160-fe3d03d2236b.png)
 
-- Make a list of four word sequences (that do not contain a period)
+- Make a list of two word sequences (that do not contain a period)
  
         
 ```python        
-# most common four word sequence (not including a period)
-four_seq_noperiod = Counter(text6_noperiod)
-top5_four_seq_noperiod = four_seq_noperiod.most_common(5)
-top5_four_seq_noperiod
+# most common two word sequence (not including a period)
+two_seq_noperiod = Counter(text5_noperiod)
+top10_seq_noperiod = two_seq_noperiod.most_common(10)
+top10_seq_noperiod
 
+seq_freq_df = pd.DataFrame(two_seq_noperiod.most_common())
+seq_freq_df.columns = ['words','count']
 
-# histogram
-plt.figure(figsize = (30,10))
+#histogram
 sns.set(font_scale = 2.5)
-h = sns.barplot(x = 'words', y = 'count', data = seq4_freq_df.iloc[0:30])
+plt.figure(figsize = (30,10))
+h = sns.barplot(x = 'words', y = 'count', data = seq_freq_df.iloc[0:30])
 h.set_xticklabels(h.get_xticklabels(),rotation = 90)
-h.set_title('Top 30 Frequently occured four word sequences')
+h.set_title('Top 30 Frequently occured two word sequences')
 ```
-![image](https://user-images.githubusercontent.com/43469728/161373752-e964f22f-4ea8-4403-80a5-1a02d139d643.png)
+
+![image](https://user-images.githubusercontent.com/43469728/161374646-ca247674-bfba-498d-b8be-afe4164450da.png)
+
 
 ### Reference
 - https://wikidocs.net/21703
